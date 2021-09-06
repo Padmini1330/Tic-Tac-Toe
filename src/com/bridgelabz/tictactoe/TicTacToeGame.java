@@ -33,9 +33,28 @@ public class TicTacToeGame
 	
 	public void makeMove() 
 	{
-		System.out.println("Choose index[1-9]to make move:");
-		int moveIndex=scanner.nextInt();
-		
+		System.out.println("Available spaces to make a move on board: ");
+		int isEmpty=0;
+		for(int index=1;index<=9;index++)
+		{
+			if(board[index]== ' ')
+			{
+				isEmpty=1;
+				System.out.print(index+ " ");
+			}
+				
+		}
+        System.out.println();
+        if(isEmpty==1)
+        {
+        	System.out.println("Choose index to make move:");
+    		int moveIndex=scanner.nextInt();
+    		if(board[moveIndex]!=' ')
+    		{
+    			System.out.println("Invalid move! Choose the index that is free on board");
+    		}
+        }
+			
 	}
 	
 	public void showBoard() 
