@@ -54,28 +54,32 @@ public class TicTacToeGame
 	public void playerMove() 
 	{
 		freeIndexOnBoard();
-		if(emptyIndex>=0)
-		{
-			System.out.println("Available spaces to make a move on board: ");
+		int flag=0;
+		
 			for(int index=1;index<=9;index++)
 			{
 				if(freeSpaces[index]!=0)
 				{
 					System.out.print(freeSpaces[index]+ " ");
+					flag=1;
 				}
 				
 			}
-	        System.out.println();
-	       	showBoard();
-	        System.out.println("Choose index to make move:");
-	    	int moveIndex=scanner.nextInt();
-	    	if(board[moveIndex]!=' ')
-	    	{
-	    		System.out.println("Invalid move! Choose the index that is free on board");
-	    	}
-	    	board[moveIndex]=playerKey;
-	    	computerMove();
-		}        
+			if(flag==1)
+			{
+				System.out.print(" are available spaces ");
+				System.out.println();
+		       	showBoard();
+		        System.out.println("Choose index to make move:");
+		    	int moveIndex=scanner.nextInt();
+		    	if(board[moveIndex]!=' ')
+		    	{
+		    		System.out.println("Invalid move! Choose the index that is free on board");
+		    	}
+		    	board[moveIndex]=playerKey;
+		    	computerMove();
+			}
+	            
 		else
 		{
 			return;
@@ -88,7 +92,7 @@ public class TicTacToeGame
 	{
 		showBoard();
 		freeIndexOnBoard();
-		if(emptyIndex>0)
+		if(emptyIndex!=1)
 		{
 			for(int index=1;index<=9;index++)
 			{
@@ -96,6 +100,7 @@ public class TicTacToeGame
 				if(result(computerKey)==2)
 				{
 					playerMove();
+					
 					
 				}
 				board[freeSpaces[index]]=' ';
@@ -107,8 +112,30 @@ public class TicTacToeGame
 				{
 					board[freeSpaces[index]]=computerKey;
 					playerMove();
+					
 				}
 				board[freeSpaces[index]]=' ';
+			}
+			for(int index=1;index<=9;index++)
+			{
+				if(freeSpaces[index]==1) 
+				{
+					board[1]=computerKey;
+				}
+				else if(freeSpaces[index]==3)
+				{
+					board[3]=computerKey;
+				}
+				else if(freeSpaces[index]==7)
+				{
+					board[7]=computerKey;
+				}
+				else
+				{
+					board[9]=computerKey;
+				}
+				playerMove();
+				
 			}
 			for(int index=1;index<=9;index++)
 			{
@@ -116,9 +143,11 @@ public class TicTacToeGame
 				break;
 			}
 			playerMove();
+			
 		}
 		else
 		{
+			System.out.println("Game finished!");
 			return;
 		}
 				
