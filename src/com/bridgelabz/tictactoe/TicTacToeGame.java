@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class TicTacToeGame 
 {
 	public static char[] board= new char[10];
+	public char playerKey;
+	public char computerKey;
 	
 	Scanner scanner=new Scanner(System.in);
 	public void createBoard()
@@ -19,19 +21,18 @@ public class TicTacToeGame
 	public void getInput() 
 	{
 		System.out.println("Choose X or O");
-		char playerMark=scanner.next().toUpperCase().charAt(0);
-		char computerMark;
-		if (playerMark=='X')
+		playerKey=scanner.next().toUpperCase().charAt(0);
+		if (playerKey=='X')
 		{
-			computerMark='O';
+			computerKey='O';
 		}
 		else
-			computerMark='X';
-		System.out.println("Player :" +playerMark+ " computer:" +computerMark);
+			computerKey='X';
+		System.out.println("Player :" +playerKey+ " computer:" +computerKey);
 
 	}
 	
-	public void makeMove() 
+	public void playerMove() 
 	{
 		System.out.println("Available spaces to make a move on board: ");
 		int isEmpty=0;
@@ -54,9 +55,15 @@ public class TicTacToeGame
     			System.out.println("Invalid move! Choose the index that is free on board");
     		}
         }
+        
+        result(playerKey);
 			
 	}
 	
+	public void computerMove()
+	{
+		result(computerKey);
+	}
 	public void showBoard() 
 	{
 		int count=0;
@@ -82,10 +89,47 @@ public class TicTacToeGame
 		tictactoe.createBoard();
 		tictactoe.getInput();
 		tictactoe.showBoard();
-		tictactoe.makeMove();
+		tictactoe.playerMove();
 		
 	}
 
+	public int isWin(char key) 
+	{
+		int win=0;
+		int row=1,column=1;
+		if(board[1]==key && board[5]==key && board[9]==key)
+			win=1;
+		else if(board[3]==key && board[5]==key && board[7]==key)
+			win=1;
+		for(int index=1;index<=3;index++)
+		{
+			if(board[row]==key && board[row+1]==key && board[row+2]==key) 
+				win=1;
+			row=4;				
+		}
+		for(int index=1;index<=3;index++)
+		{
+			if(board[column]==key && board[column+3]==key && board[column+6]==key) 
+				win=1;
+			column=2;				
+		}
+		
+		return win;
+			
+	}
+
+	public void result(char key)
+	{
+		if(isWin(key)==1) 
+		{
+			if(key==playerKey)
+				System.out.println("Player has won!");
+			else
+				System.out.println("Computer has won!");
+		}
+		else
+			System.out.println("Change the turn");
+	}
 	public void tossCoin() 
 	{
 		System.out.println("Select Heads or Tails[H or T]:");
