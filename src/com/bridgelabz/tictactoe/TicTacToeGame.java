@@ -78,11 +78,27 @@ public class TicTacToeGame
 	{
 		TicTacToeGame tictactoe=new TicTacToeGame();
 		System.out.println("**Welcome to Tic-tac-toe game**");
+		tictactoe.tossCoin();
 		tictactoe.createBoard();
 		tictactoe.getInput();
 		tictactoe.showBoard();
 		tictactoe.makeMove();
 		
+	}
+
+	public void tossCoin() 
+	{
+		System.out.println("Select Heads or Tails[H or T]:");
+		char toss=scanner.next().toUpperCase().charAt(0);
+		char result;
+		if(Math.random()<0.5)
+			result='H';
+		else
+			result='T';
+		if(toss==result)
+			System.out.println("Player plays first!");
+		else
+			System.out.println("Computer plays first!");
 	}
 
 	
