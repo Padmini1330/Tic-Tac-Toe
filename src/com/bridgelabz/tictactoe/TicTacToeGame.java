@@ -82,7 +82,8 @@ public class TicTacToeGame
 	            
 		else
 		{
-			return;
+			System.out.println("Game tie");
+			System.exit(0);
 		}
 		
 			
@@ -150,7 +151,7 @@ public class TicTacToeGame
 		else
 		{
 			System.out.println("Game finished!");
-			return;
+			
 		}
 				
 	}
