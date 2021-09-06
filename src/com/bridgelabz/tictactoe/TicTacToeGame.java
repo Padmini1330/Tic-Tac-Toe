@@ -7,6 +7,7 @@ public class TicTacToeGame
 {
 	public static char[] board= new char[10];
 	
+	Scanner scanner=new Scanner(System.in);
 	public void createBoard()
 	{
 		for(int index=1;index<=9;index++)
@@ -17,7 +18,6 @@ public class TicTacToeGame
 	
 	public void getInput() 
 	{
-		Scanner scanner=new Scanner(System.in);
 		System.out.println("Choose X or O");
 		char playerMark=scanner.next().toUpperCase().charAt(0);
 		char computerMark;
@@ -28,8 +28,14 @@ public class TicTacToeGame
 		else
 			computerMark='X';
 		System.out.println("Player :" +playerMark+ " computer:" +computerMark);
+
+	}
+	
+	public void makeMove() 
+	{
+		System.out.println("Choose index[1-9]to make move:");
+		int moveIndex=scanner.nextInt();
 		
-		showBoard();
 	}
 	
 	public void showBoard() 
@@ -55,9 +61,12 @@ public class TicTacToeGame
 		System.out.println("**Welcome to Tic-tac-toe game**");
 		tictactoe.createBoard();
 		tictactoe.getInput();
-		
+		tictactoe.showBoard();
+		tictactoe.makeMove();
 		
 	}
+
+	
 	
 
 }
