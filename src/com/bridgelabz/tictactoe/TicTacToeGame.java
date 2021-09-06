@@ -137,6 +137,8 @@ public class TicTacToeGame
 				playerMove();
 				
 			}
+			if(board[freeSpaces[5]]==' ')
+				board[5]=computerKey;
 			for(int index=1;index<=9;index++)
 			{
 				board[freeSpaces[index]]=computerKey;
