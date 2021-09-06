@@ -5,9 +5,12 @@ import java.util.Scanner;
 
 public class TicTacToeGame 
 {
-	public static char[] board= new char[10];
+	public char[] board= new char[10];
 	public char playerKey;
 	public char computerKey;
+	public int isEmpty=0;
+	public int[] freeSpaces=new int[10];
+	public static int emptyIndex=0;
 	
 	Scanner scanner=new Scanner(System.in);
 	public void createBoard()
@@ -32,38 +35,71 @@ public class TicTacToeGame
 
 	}
 	
-	public void playerMove() 
+	public void freeIndexOnBoard()
 	{
-		System.out.println("Available spaces to make a move on board: ");
-		int isEmpty=0;
+		emptyIndex=1;
 		for(int index=1;index<=9;index++)
 		{
 			if(board[index]== ' ')
 			{
-				isEmpty=1;
-				System.out.print(index+ " ");
+				freeSpaces[emptyIndex]=index;
+				emptyIndex++;
 			}
 				
 		}
-        System.out.println();
-        if(isEmpty==1)
-        {
-        	System.out.println("Choose index to make move:");
-    		int moveIndex=scanner.nextInt();
-    		if(board[moveIndex]!=' ')
-    		{
-    			System.out.println("Invalid move! Choose the index that is free on board");
-    		}
-        }
-        
-        result(playerKey);
+	}
+	public void playerMove() 
+	{
+		System.out.println("Available spaces to make a move on board: ");
+		freeIndexOnBoard();
+		if(emptyIndex!=1)
+		{
+			for(int index=1;index<=9;index++)
+			{
+				System.out.print(freeSpaces[index]+ " ");
+			}
+	        System.out.println();
+	       	showBoard();
+	        System.out.println("Choose index to make move:");
+	    	int moveIndex=scanner.nextInt();
+	    	if(board[moveIndex]!=' ')
+	    	{
+	    		System.out.println("Invalid move! Choose the index that is free on board");
+	    	}
+	    	board[moveIndex]=playerKey;
+	    	computerMove();
+		}        
+		else
+		{
+			System.out.println("No empty space left. Game is finished!");
+			return;
+		}
+		
 			
 	}
 	
 	public void computerMove()
 	{
-		result(computerKey);
+		showBoard();
+		freeIndexOnBoard();
+		if(emptyIndex!=1)
+		{
+			for(int index=1;index<=9;index++)
+			{
+				board[freeSpaces[index]]=computerKey;
+				break;
+				
+			}	
+			playerMove();
+		}
+		else
+		{
+			System.out.println("No empty space left. Game is finished!");
+			return;
+		}
+				
 	}
+	
 	public void showBoard() 
 	{
 		int count=0;
@@ -81,17 +117,6 @@ public class TicTacToeGame
 		
 	}
 
-	public static void main(String[] args) 
-	{
-		TicTacToeGame tictactoe=new TicTacToeGame();
-		System.out.println("**Welcome to Tic-tac-toe game**");
-		tictactoe.tossCoin();
-		tictactoe.createBoard();
-		tictactoe.getInput();
-		tictactoe.showBoard();
-		tictactoe.playerMove();
-		
-	}
 
 	public int isWin(char key) 
 	{
@@ -118,19 +143,20 @@ public class TicTacToeGame
 			
 	}
 
-	public void result(char key)
+	public int result(char key)
 	{
 		if(isWin(key)==1) 
 		{
 			if(key==playerKey)
-				System.out.println("Player has won!");
+				return 1;
 			else
-				System.out.println("Computer has won!");
+				return 2;
 		}
 		else
-			System.out.println("Change the turn");
+			return 3;
 	}
-	public void tossCoin() 
+	
+	public void checkToss() 
 	{
 		System.out.println("Select Heads or Tails[H or T]:");
 		char toss=scanner.next().toUpperCase().charAt(0);
@@ -140,12 +166,29 @@ public class TicTacToeGame
 		else
 			result='T';
 		if(toss==result)
+		{
 			System.out.println("Player plays first!");
+			playerMove();
+		}
 		else
+		{
 			System.out.println("Computer plays first!");
+			computerMove();
+		}
+			
 	}
 
 	
-	
+
+	public static void main(String[] args) 
+	{
+		TicTacToeGame tictactoe=new TicTacToeGame();
+		System.out.println("**Welcome to Tic-tac-toe game**");
+		tictactoe.createBoard();
+		tictactoe.getInput();
+		tictactoe.checkToss();
+			
+		
+	}
 
 }
