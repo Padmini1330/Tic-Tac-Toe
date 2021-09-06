@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class TicTacToeGame 
 {
-	public static char[] board=new char[10];
+	public static char[] board= new char[10];
 	
 	public void createBoard()
 	{
@@ -28,8 +28,27 @@ public class TicTacToeGame
 		else
 			computerMark='X';
 		System.out.println("Player :" +playerMark+ " computer:" +computerMark);
+		
+		showBoard();
 	}
 	
+	public void showBoard() 
+	{
+		int count=0;
+		for(int index1=1;index1<=9;index1++)
+		{
+			System.out.print("|"+board[index1]+" ");
+			count++;
+			if(count==3)
+			{
+				System.out.println();
+				count=0;
+			}
+			
+		}
+		
+	}
+
 	public static void main(String[] args) 
 	{
 		TicTacToeGame tictactoe=new TicTacToeGame();
