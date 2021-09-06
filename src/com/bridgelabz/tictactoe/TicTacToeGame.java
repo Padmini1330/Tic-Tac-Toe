@@ -35,6 +35,10 @@ public class TicTacToeGame
 	{
 		System.out.println("Choose index[1-9]to make move:");
 		int moveIndex=scanner.nextInt();
+		if(board[moveIndex]!=' ')
+		{
+			System.out.println("Invalid move! Choose the empty index on board");
+		}
 		
 	}
 	
