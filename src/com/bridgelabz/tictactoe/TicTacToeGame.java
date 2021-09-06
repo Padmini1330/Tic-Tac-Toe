@@ -1,6 +1,7 @@
 package com.bridgelabz.tictactoe;
 
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TicTacToeGame 
@@ -11,6 +12,7 @@ public class TicTacToeGame
 	public int isEmpty=0;
 	public int[] freeSpaces=new int[10];
 	public static int emptyIndex=0;
+	int win=0;
 	
 	Scanner scanner=new Scanner(System.in);
 	public void createBoard()
@@ -38,6 +40,7 @@ public class TicTacToeGame
 	public void freeIndexOnBoard()
 	{
 		emptyIndex=1;
+		Arrays.fill(freeSpaces, 0);
 		for(int index=1;index<=9;index++)
 		{
 			if(board[index]== ' ')
@@ -50,13 +53,17 @@ public class TicTacToeGame
 	}
 	public void playerMove() 
 	{
-		System.out.println("Available spaces to make a move on board: ");
 		freeIndexOnBoard();
-		if(emptyIndex!=1)
+		if(emptyIndex>=0)
 		{
+			System.out.println("Available spaces to make a move on board: ");
 			for(int index=1;index<=9;index++)
 			{
-				System.out.print(freeSpaces[index]+ " ");
+				if(freeSpaces[index]!=0)
+				{
+					System.out.print(freeSpaces[index]+ " ");
+				}
+				
 			}
 	        System.out.println();
 	       	showBoard();
@@ -71,7 +78,6 @@ public class TicTacToeGame
 		}        
 		else
 		{
-			System.out.println("No empty space left. Game is finished!");
 			return;
 		}
 		
@@ -82,19 +88,37 @@ public class TicTacToeGame
 	{
 		showBoard();
 		freeIndexOnBoard();
-		if(emptyIndex!=1)
+		if(emptyIndex>0)
 		{
 			for(int index=1;index<=9;index++)
 			{
 				board[freeSpaces[index]]=computerKey;
-				break;
-				
+				if(result(computerKey)==2)
+				{
+					playerMove();
+					
+				}
+				board[freeSpaces[index]]=' ';
 			}	
+			for(int index=1;index<=9;index++)
+			{
+				board[freeSpaces[index]]=playerKey;
+				if(result(playerKey)==1)
+				{
+					board[freeSpaces[index]]=computerKey;
+					playerMove();
+				}
+				board[freeSpaces[index]]=' ';
+			}
+			for(int index=1;index<=9;index++)
+			{
+				board[freeSpaces[index]]=computerKey;
+				break;
+			}
 			playerMove();
 		}
 		else
 		{
-			System.out.println("No empty space left. Game is finished!");
 			return;
 		}
 				
@@ -105,7 +129,7 @@ public class TicTacToeGame
 		int count=0;
 		for(int index1=1;index1<=9;index1++)
 		{
-			System.out.print("|"+board[index1]+" ");
+			System.out.print("|"+board[index1]+"|"+" ");
 			count++;
 			if(count==3)
 			{
@@ -120,7 +144,6 @@ public class TicTacToeGame
 
 	public int isWin(char key) 
 	{
-		int win=0;
 		int row=1,column=1;
 		if(board[1]==key && board[5]==key && board[9]==key)
 			win=1;
@@ -187,6 +210,11 @@ public class TicTacToeGame
 		tictactoe.createBoard();
 		tictactoe.getInput();
 		tictactoe.checkToss();
+		if(emptyIndex!=1)
+		{
+			System.out.println("Game finished!");
+		}
+		
 			
 		
 	}
